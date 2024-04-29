@@ -1,0 +1,20 @@
+{% extends 'chat/_base.html' %} {% load static %} {% block title %}
+  Chats
+{% endblock %} {% block content %}
+  <h1>Proceed with the type of chat you want</h1>
+  <div class="d-flex justify-content-around">
+    <a href="{% url 'regions' %}" class="btn btn-primary" style="
+      background-color: #3b3b8b;
+      padding: 20px 40px;
+      font-size: 20px;
+      margin-right: 10px;
+    ">
+      <img src="{% static 'images/Regions.jpeg' %}" alt="Regions" class="img-fluid" style="width: 50%; height: auto" />
+      <p style="font-size: 1.5rem">Regions</p>
+    </a>
+    <a href="{% url 'departments' %}" class="btn btn-primary" style="background-color: #3b3b8b; padding: 10px 20px; font-size: 20px">
+      <img src="{% static 'images/Departments.jpeg' %}" alt="Departments" class="img-fluid" style="width: 50%; height: auto" />
+      <p style="font-size: 1.5rem">Departments</p>
+    </a>
+  </div>
+{% endblock %}

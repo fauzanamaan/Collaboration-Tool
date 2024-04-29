@@ -1,0 +1,97 @@
+{# Extend the base template 'dashboard/_base.html' #}
+{% extends 'dashboard/_base.html' %}
+
+{# Define the title block #}
+{% block title %}
+  {# Set the page title to 'Sign Up' #}
+  Sign Up
+{% endblock %}
+
+{# Define the content block #}
+{% block content %}
+  <style>
+  .error-message {
+    color: red; /* Change this to the color you want */
+  }
+  </style>
+  {# Check if the user is authenticated #}
+  {% if user.is_authenticated %}
+    {# If the user is already logged in, redirect them to the dashboard #}
+    {% comment %}Redirect user to dashboard if already logged in{% endcomment %}
+    <script>
+      window.location.href = "{% url 'dashboard' %}"
+    </script>
+  {% else %}
+    {# If the user is not logged in, display the sign up form #}
+    <style></style>
+    {# Bootstrap container for centering and padding #}
+    <div class="container">
+      {# Bootstrap row for layout and alignment #}
+      <div class="row justify-content-center">
+        {# Bootstrap column for layout. 'md' means medium devices and up. '6' means use half the available space. #}
+        <div class="col-md-6">
+          {# Bootstrap card for grouping content in a box with a shadow #}
+          <div class="card">
+            {# Bootstrap card body for padding around content #}
+            <div class="card-body">
+              {# Bootstrap card title for a title with a larger font #}
+              <h5 class="card-title">Sign Up</h5>
+              {# Form for user input. 'POST' method is used to send data to the server. #}
+              <form method="POST">
+                {# CSRF token for protection against cross-site request forgery attacks #}
+                {% csrf_token %}
+                {# Bootstrap form group for better layout and spacing #}
+                <div class="mb-3">
+                  {# Label for the username input field #}
+                  <label for="username" class="form-label">Username</label>
+                  {# Input field for the username. 'form-control' is a Bootstrap class for styling form inputs. #}
+                  <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" />
+                </div>
+                {# Similar structure is followed for the other input fields #}
+                <div class="mb-3">
+                  <label for="first_name" class="form-label">First Name</label>
+                  <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name" />
+                </div>
+                <div class="mb-3">
+                  <label for="last_name" class="form-label">Last Name</label>
+                  <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter your last name" />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" />
+                </div>
+                <div class="mb-3">
+                  {# Display any validation errors for the password1 field #}
+                  {{ form.password1.errors }}
+                  <label for="password1" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter your password" />
+                  {# List for displaying password help texts #}
+                  <ul class="help-text-list">
+                    {# Loop through each help text and display it #}
+                    {% for help_text in password_help_texts %}
+                      <li>
+                        <small class="form-text text-muted">{{ help_text }}</small>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <div class="mb-3">
+                  {# Display any validation errors for the password2 field #}
+                  {% if form.password2.errors %}
+                    <div class="error-message">
+                      {{ form.password2.errors }}
+                    </div>
+                  {% endif %}
+                  <label for="password2" class="form-label">Confirm Password</label>
+                  <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm your password" />
+                </div>
+                {# Bootstrap button for the form submit. 'btn' and 'btn-primary' are Bootstrap classes for styling buttons. #}
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

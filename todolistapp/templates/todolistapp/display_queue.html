@@ -1,0 +1,161 @@
+{% extends 'dashboard/_base.html' %} {% block title %} To Do List {% endblock %}
+{% block content %}
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center my-4">
+    <h2>Task Queue</h2>
+    <a href="{% url 'add_task' %}" class="btn btn-primary">Add Task</a>
+  </div>
+  <table
+    class="table table-hove table-bordered border-dark border-3"
+    style="background-color: white; color #00BFA5"
+  >
+    <thead>
+      <tr>
+        <th scope="col" class="text-center">Task Name</th>
+        <th scope="col" class="text-center">Priority Level</th>
+        <th scope="col" class="text-center">Deadline</th>
+        <th scope="col" class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in tasks %} {% if task.priority == 0 %}
+      <tr class="table-info">
+        <td class="text-center">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="taskCheck{{ task.id }}"
+            />
+            <label class="form-check-label" for="taskCheck{{ task.id }}"
+              >{{ task.title }}</label
+            >
+          </div>
+        </td>
+        <td class="text-center">
+          <span>Low</span>
+        </td>
+        <td class="text-center">{{ task.deadline }}</td>
+        <td class="text-center">
+          <div>
+            <a
+              href="{% url 'delete_task' task.id %}"
+              class="btn btn-outline-success"
+              >Complete</a
+            >
+            <a
+              href="{% url 'delete_task' task.id %}"
+              class="btn btn-outline-danger"
+              >Delete</a
+            >
+          </div>
+        </td>
+      </tr>
+      {% elif task.priority == 1 %}
+      <tr class="table-primary">
+        <td class="text-center">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="taskCheck{{ task.id }}"
+            />
+            <label class="form-check-label" for="taskCheck{{ task.id }}"
+              >{{ task.title }}</label
+            >
+          </div>
+        </td>
+        <td class="text-center">
+          <span>Medium</span>
+        </td>
+        <td class="text-center">{{ task.deadline }}</td>
+        <td class="text-center">
+          <div>
+            <a
+              href="{% url 'delete_task' task.id %}"
+              class="btn btn-outline-success"
+              >Complete</a
+            >
+            <a
+              href="{% url 'delete_task' task.id %}"
+              class="btn btn-outline-danger"
+              >Delete</a
+            >
+          </div>
+        </td>
+      </tr>
+      {% elif task.priority == 2 %}
+      <tr class="table-warning">
+        <td class="text-center">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="taskCheck{{ task.id }}"
+            />
+            <label class="form-check-label" for="taskCheck{{ task.id }}"
+              >{{ task.title }}</label
+            >
+          </div>
+        </td>
+        <td class="text-center">
+          <span>High</span>
+        </td>
+        <td class="text-center">{{ task.deadline }}</td>
+        <td class="text-center">
+          <div>
+            <a
+              href="{% url 'delete_task' task.id %}"
+              class="btn btn-outline-success"
+              >Complete</a
+            >
+            <a
+              href="{% url 'delete_task' task.id %}"
+              class="btn btn-outline-danger"
+              >Delete</a
+            >
+          </div>
+        </td>
+      </tr>
+      {% elif task.priority == 3 %}
+      <tr class="table-danger">
+        <td class="text-center">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="taskCheck{{ task.id }}"
+            />
+            <label class="form-check-label" for="taskCheck{{ task.id }}"
+              >{{ task.title }}</label
+            >
+          </div>
+        </td>
+        <td class="text-center">
+          <span>Urgent!</span>
+        </td>
+        <td class="text-center">{{ task.deadline }}</td>
+        <td class="text-center">
+          <div>
+            <a
+              href="{% url 'delete_task' task.id %}"
+              class="btn btn-outline-success"
+              >Complete</a
+            >
+            <a
+              href="{% url 'delete_task' task.id %}"
+              class="btn btn-outline-danger"
+              >Delete</a
+            >
+          </div>
+        </td>
+      </tr>
+      {% endif %} {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

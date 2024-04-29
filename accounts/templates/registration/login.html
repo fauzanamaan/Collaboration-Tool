@@ -1,0 +1,39 @@
+{% extends 'accounts/base.html' %}
+<!-- Extends the base.html template -->
+
+{% block title %} Login {% endblock %}
+<!-- Defines the title block for the page -->
+
+{% block content %}
+<!-- Defines the content block for the page -->
+
+{% if form.errors %}
+<!-- Checks if there are any form errors -->
+<div class="alert alert-danger" role="alert">
+  You have entered an incorrect username or password.
+</div>
+{% endif %} {% if next %}
+<!-- Checks if there is a 'next' parameter in the URL -->
+{% if not user.is_authenticated %}
+<!-- Checks if the user is not authenticated -->
+<h1>Please log in to view that page</h1>
+{% else %}
+<h1>Please login</h1>
+{% endif %} {% endif %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3 mx-auto">
+      <!-- Column for the form to take up 33.33% of the width, centered -->
+      <form method="post">
+        {% csrf_token %}
+        <!-- Generates a CSRF token for security -->
+        {{ form.as_p }}
+        <!-- Renders the form fields as paragraphs -->
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

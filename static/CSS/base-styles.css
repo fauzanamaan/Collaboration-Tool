@@ -1,0 +1,11 @@
+.nav-icon {
+    color: #ffffff !important;
+    /* Change the color to whatever you want */
+}
+
+.nav-icon:hover {
+    color: #ffffff !important;
+    /* Change the color to whatever you want */
+    transform: scale(1.2);
+    /* Make the icon slightly larger */
+}

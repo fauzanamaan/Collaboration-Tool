@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} Your Page Title {% endblock %}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'CSS/base-styles.css' %}" />
+    <style>
+      /* Add your custom styles here */
+      body {
+        background-color: #f1f1f1;
+      }
+      .top-navbar {
+        background-color: #556685;
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 120px;
+        z-index: 9999;
+        width: 100%;
+        border-bottom: 2px solid #c8dbff;
+      }
+
+      .left-navbar {
+        background-color: #31456e;
+        color: white;
+        position: fixed;
+        top: 120px; /* Adjust this value based on the height of your top navbar */
+        left: 0;
+        bottom: 0;
+        z-index: 9999;
+        width: 125px; /* Adjust this value based on the desired width of your left navbar */
+      }
+
+      .main-content {
+        margin-left: 200px; /* Adjust this value based on the width of your left navbar */
+        margin-top: 130px; /* Adjust this value based on the height of your top navbar */
+      }
+
+      .messages {
+        height: 400px;
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Navbar -->
+    <nav class="top-navbar">
+      <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+            <!-- Logo -->
+            <a class="navbar-brand" href="{% url 'dashboard' %}">
+              <img
+                src="{% static 'images/logo.jpeg' %}"
+                alt="logo"
+                width="143"
+                height="100"
+                class="d-inline-block align-text-top"
+              />
+            </a>
+            <div class="align-self-center">
+              <!-- Heading -->
+              <h3 style="font-family: cursive; color: #f1f1f1">
+                <strong>Internal Collaboration Platform</strong>
+              </h3>
+            </div>
+          </div>
+          <div class="ml-auto">
+            <!-- User Authentication -->
+            {% if user.is_authenticated %}
+            <div class="btn-group">
+              <button
+                type="button"
+                class="btn btn-primary dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                style="
+                  background-color: #004990;
+                  color: #f5f5f5;
+                  border-radius: 10px;
+                  font-family: 'Arial';
+                  font-weight: bold;
+                  min-width: 120px;
+                  width: auto;
+                "
+              >
+                <div class="d-flex align-items-center">
+                  <span>Hello, {{ user.first_name }}! </span>
+                  {% if user.profile.profile_pic %}
+                  <!-- User Profile Picture -->
+                  <img
+                    src="{{ user.profile.profile_pic.url }}"
+                    class="profile-img"
+                    style="height: 30px"
+                    alt=""
+                  />
+                  {% else %}
+                  <!-- Default Profile Picture -->
+                  <img
+                    src="{% static 'images/default.jpeg' %}"
+                    class="profile-img"
+                    style="height: 30px; width: 30px"
+                    alt=""
+                  />
+                  {% endif %}
+                </div>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <!-- Link to Edit Account Settings-->
+                  <a class="dropdown-item" href="{% url 'edit-account' %}">Account</a>
+                </li>
+                <li>
+                  <!-- Link to Edit Profile -->
+                  <a class="dropdown-item" href="{% url 'edit-profile' %}">Profile</a>
+                </li>
+                <li>
+                  <!-- Link to Change Password -->
+                  <a class="dropdown-item" href="{% url 'change-password' %}">Change Password</a>
+                </li>
+                <li>
+                  <!-- Link to Log Out -->
+                  <a class="dropdown-item" href="{% url 'logout_success' %}">Log out</a>
+                </li>
+
+              </ul>
+            </div>
+            {% else %}
+              <!-- Links for Non-Authenticated Users -->
+              <a href="{% url 'login' %}" class="btn btn-primary btn-hover-effect" style="background-color: #E7D4C0; color: #DF5131; border-radius: 10px; font-family: 'Arial'; font-weight: bold; margin-right: 10px;">Log In</a>
+              <a href="{% url 'signup' %}" class="btn btn-primary btn-hover-effect" style="background-color: #E34234; color: #F2F1E8; border-radius: 10px; font-family: 'Arial'; font-weight: bold;">Sign Up</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    {% if user.is_authenticated %}
+    <nav class="left-navbar">
+      <ul
+        class="list-unstyled d-flex flex-column justify-content-around align-items-center h-100"
+      >
+        <li>
+          <a href="{% url 'dashboard' %}"
+            ><i
+              class="bi bi-house-door fs-3 nav-icon"
+              aria-label="Dashboard"
+            ></i
+          ></a>
+        </li>
+        <li>
+          <a href="{% url 'messages' %}"
+            ><i class="bi bi-chat-dots fs-3 nav-icon" aria-label="Messages"></i
+          ></a>
+        </li>
+        <li>
+          <a href="{% url 'display_queue' %}"
+            ><i
+              class="bi bi-list-task fs-3 nav-icon"
+              aria-label="To-Do List"
+            ></i
+          ></a>
+        </li>
+
+        <li>
+          <a href="{% url 'calendar' %}"
+            ><i class="bi bi-calendar3 fs-3 nav-icon" aria-label="Calendar"></i
+          ></a>
+        </li>
+
+        <li>
+          <a href="{% url 'logout_success' %}" class="nav-icon"
+            ><h6><strong>Log out</strong></h6></a
+          >
+        </li>
+      </ul>
+    </nav>
+    {% endif %}
+
+    <main class="main-content">
+      {% block content %}
+      <!-- Add your main content here -->
+      {% endblock %}
+    </main>
+
+    {% block scripts %}
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    {% endblock %}
+  </body>
+</html>

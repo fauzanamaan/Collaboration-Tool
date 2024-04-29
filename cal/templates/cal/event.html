@@ -1,0 +1,48 @@
+{% extends 'cal/base.html' %}
+
+{% block title %}
+  Event
+{% endblock %}
+
+{% block content %}
+  <div class="clearfix">
+    <!-- The following line creates a button with the 'btn' and 'btn-info' classes from Bootstrap.
+         It is styled as a blue button and positioned to the left. -->
+    <a class="btn btn-info left" href="{% url 'calendar' %}">Calendar</a>
+  </div>
+
+  {% if form.errors %}
+    {% for field in form %}
+      {% for error in field.errors %}
+        <div class="alert alert-danger">
+          <!-- The following line displays the label of the form field and the corresponding error message.
+               The 'escape' filter is used to prevent any HTML tags or special characters from being rendered. -->
+          {{ field.label }} <strong>{{ error|escape }}</strong>
+        </div>
+      {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">
+        <!-- The following line displays the label of the form field and the corresponding non-field error message.
+             The 'escape' filter is used to prevent any HTML tags or special characters from being rendered. -->
+        {{ field.label }} <strong>{{ error|escape }}</strong>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <table class="form form-table">
+      <!-- The following line renders the form fields in the table.
+           Each form field is automatically rendered with appropriate HTML elements based on its type. -->
+      {{ form }}
+      <tr>
+        <td colspan="2">
+          <!-- The following line creates a submit button with the 'btn' and 'btn-info' classes from Bootstrap.
+               It is styled as a blue button and positioned to the right. -->
+          <button type="submit" class="btn btn-info right">Submit</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+{% endblock %}

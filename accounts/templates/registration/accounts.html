@@ -1,0 +1,28 @@
+{% extends 'dashboard/_base.html' %}
+
+{% block title %}
+  Edit Account Settings  <!-- Title for the page -->
+{% endblock %}
+
+{% block content %}
+
+<style>
+  .main-content {
+    margin-left: 200px; /* Adjust this value based on the width of your left navbar */
+    margin-top: 130px; /* Adjust this value based on the height of your top navbar */
+  }
+</style>
+    <br></br>
+    <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>Edit Account Settings</h1>  <!-- Heading for the form -->
+        <form method="POST" action="{% url 'edit-profile' %}">  <!-- Form with POST method and action URL -->
+          {% csrf_token %}  <!-- CSRF token to prevent cross-site request forgery -->
+          {{ form.as_p }}  <!-- Render the form fields as paragraphs -->
+          <button type="submit" class="btn btn-primary">Save</button>  <!-- Submit button to save the form -->
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

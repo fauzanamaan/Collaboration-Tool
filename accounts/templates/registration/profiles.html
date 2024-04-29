@@ -1,0 +1,37 @@
+{% extends 'dashboard/_base.html' %}
+
+{% block title %}
+  Edit Profile  <!-- Title for the page -->
+{% endblock %}
+
+{% block content %}
+
+<style>
+  .main-content {
+    margin-left: 200px; /* Adjust this value based on the width of your left navbar */
+    margin-top: 130px; /* Adjust this value based on the height of your top navbar */
+  }
+</style>
+
+
+{% if user.is_authenticated %}
+{% if user.id == profile.user.id %}
+    <br></br>
+    <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>Edit Profile</h1>  <!-- Heading for the form -->
+        <form method="POST" action="{% url 'edit-profile' %}" enctype="multipart/form-data">  <!-- Form with POST method and action URL -->
+          {% csrf_token %}  <!-- CSRF token to prevent cross-site request forgery -->
+          {{ form.as_p }}  <!-- Render the form fields as paragraphs -->
+          <button type="submit" class="btn btn-primary">Update Profile Page</button>  <!-- Submit button to save the form -->
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+{% else %}
+    <h1>Access Denied</h1>  <!-- Message for unauthorized users -->
+  {% endif %}
+{% endblock %}

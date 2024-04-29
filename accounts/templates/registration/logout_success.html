@@ -1,0 +1,34 @@
+{% extends 'dashboard/_base.html' %}
+
+{% block title %}
+  Logout Successful
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 text-center">
+        <h2>Logout Successful</h2>
+        <p>You have been logged out successfully.</p>
+        <p>
+          You will be redirected to the front page in <span id="countdown">5</span> seconds.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Countdown timer
+    var countdownElement = document.getElementById('countdown') // Get the HTML element with the id 'countdown'
+    var countdown = 5 // Set the initial countdown value to 5
+    
+    setInterval(function () {
+      countdown-- // Decrement the countdown value by 1
+      countdownElement.innerText = countdown // Update the text inside the countdown element with the current countdown value
+    
+      if (countdown <= 0) {
+        window.location.href = "{% url 'dashboard' %}" // Redirect the user to the 'dashboard' URL when the countdown reaches 0
+      }
+    }, 1000) // Run the code inside the setInterval function every 1000 milliseconds (1 second)
+  </script>
+{% endblock %}

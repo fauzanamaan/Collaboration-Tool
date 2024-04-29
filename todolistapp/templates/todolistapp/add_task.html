@@ -1,0 +1,42 @@
+{% extends "dashboard/_base.html" %} {% load static %} {% block content %}
+<div class="container" style="color=white">
+  <h2>Add Task</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="title" class="form-label" style="color=white">Title</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        class="form-control"
+        placeholder="task name (example: phone call...)"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="priority" class="form-label" style="color=white"
+        >Priority</label
+      >
+      <select id="priority" name="priority" class="form-control form-select">
+        <option value="0" style="color: darkcyan">Low</option>
+        <option value="1" style="color: darkolivegreen">Medium</option>
+        <option value="2" style="color: darkgoldenrod">High</option>
+        <option value="3" style="color: red">Urgent</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="deadline" class="form-label" style="color=white"
+        >Deadline</label
+      >
+      <input
+        type="datetime-local"
+        id="deadline"
+        name="deadline"
+        class="form-control"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Add Task</button>
+    <h1></h1>
+  </form>
+</div>
+{% endblock %}
